@@ -1,7 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-ajax/iron-ajax.html">
 <link rel="import" href="../ct-core-utils/ct-api-provider-behaviour.html">
-<link rel="import" href="../ct-core-utils/ct-user-identity.html">
 
 <!--
 `ct-user-groups-api`
@@ -12,11 +11,8 @@ Element containing user groups API calls
 
 <dom-module id="ct-user-groups-api">
   <template>
-    <ct-user-identity id="identity"></ct-user-identity>
-
     <iron-ajax id="updateUserGroup"></iron-ajax>
     <iron-ajax id="deleteUserFromGroup"></iron-ajax>
-
   </template>
 
   <script>
