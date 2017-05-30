@@ -52,7 +52,7 @@ Element containing user groups API calls
               var pagingProvided = pageNumber !== null && pageNumber !== undefined && pageSize !== null && pageSize !== undefined;
 
               var parentQuery = parentProvided ? 'parent_id=' + parentId : '';
-              var pageQuery = pagingProvided ? 'page_number=' + pageNumber + '&page_size=' + pageSize;
+              var pageQuery = pagingProvided ? 'page_number=' + pageNumber + '&page_size=' + pageSize : '';
 
               var queryParams = parentQuery + pageQuery;
 
