@@ -10,104 +10,104 @@ Element containing user groups API calls
 -->
 
 <dom-module id="ct-user-groups-api">
-  <template>
-    <iron-ajax id="createUserGroups"></iron-ajax>
-    <iron-ajax id="getUserGroups"></iron-ajax>
-    <iron-ajax id="joinUserGroup"></iron-ajax>
-    <iron-ajax id="leaveUserGroup"></iron-ajax>
-    <iron-ajax id="deleteUserGroup"></iron-ajax>
-  </template>
+    <template>
+        <iron-ajax id="createUserGroups"></iron-ajax>
+        <iron-ajax id="getUserGroups"></iron-ajax>
+        <iron-ajax id="joinUserGroup"></iron-ajax>
+        <iron-ajax id="leaveUserGroup"></iron-ajax>
+        <iron-ajax id="deleteUserGroup"></iron-ajax>
+    </template>
 
-  <script>
-      Polymer({
+    <script>
+        Polymer({
 
-          is: 'ct-user-groups-api',
-          behaviors: [CT.Behaviours.ApiProvider],
+            is: 'ct-user-groups-api',
+            behaviors: [CT.Behaviours.ApiProvider],
 
-          /**
-           * Create new user groups
-           *
-           * @param {{ Object, parentId: string, groupNames: String[] }} newUserGroups
-           * @returns {Promise}
-           */
-          createUserGroups: function(newUserGroups) {
-              this.$.createUserGroups.url = this._url('/user-groups');
-              this.$.createUserGroups.method = "POST";
-              this.$.createUserGroups.contentType = "application/json";
-              this.$.createUserGroups.body = newUserGroups;
-              return this._generateRequest(this.$.createUserGroups);
-          },
+            /**
+             * Create new user groups
+             *
+             * @param {{ Object, parentId: string, groupNames: String[] }} newUserGroups
+             * @returns {Promise}
+             */
+            createUserGroups: function(newUserGroups) {
+                this.$.createUserGroups.url = this._url('/user-groups');
+                this.$.createUserGroups.method = "POST";
+                this.$.createUserGroups.contentType = "application/json";
+                this.$.createUserGroups.body = newUserGroups;
+                return this._generateRequest(this.$.createUserGroups);
+            },
 
-          /**
-           * Get user groups of an object
-           *
-           * @param {String} parentId
-           * @param {Number} pageNumber
-           * @param {Number} pageSize
-           * @returns {Promise}
-           */
-          getUserGroups: function(parentId, pageNumber, pageSize) {
-              var url = '/user-groups';
-              var parentProvided = parentId !== null && parentId !== undefined;
-              var pagingProvided = pageNumber !== null && pageNumber !== undefined && pageSize !== null && pageSize !== undefined;
+            /**
+             * Get user groups of an object
+             *
+             * @param {String} parentId
+             * @param {Number} pageNumber
+             * @param {Number} pageSize
+             * @returns {Promise}
+             */
+            getUserGroups: function(parentId, pageNumber, pageSize) {
+                var url = '/user-groups';
+                var parentProvided = parentId !== null && parentId !== undefined;
+                var pagingProvided = pageNumber !== null && pageNumber !== undefined && pageSize !== null && pageSize !== undefined;
 
-              var parentQuery = parentProvided ? 'parent_id=' + parentId : '';
-              var pageQuery = pagingProvided ? 'page_number=' + pageNumber + '&page_size=' + pageSize : '';
+                var parentQuery = parentProvided ? 'parent_id=' + parentId : '';
+                var pageQuery = pagingProvided ? 'page_number=' + pageNumber + '&page_size=' + pageSize : '';
 
-              var queryParams = parentQuery + pageQuery;
+                var queryParams = parentQuery + ((parentProvided && pagingProvided) ? '&' : '') + pageQuery;
 
-              url = (queryParams.size > 0) ? url + '?' + queryParams : url;
+                url = (queryParams.length > 0) ? url + '?' + queryParams : url;
 
-              this.$.getUserGroups.url = this._url(url);
-              return this._generateRequest(this.$.getUserGroups);
-          },
+                this.$.getUserGroups.url = this._url(url);
+                return this._generateRequest(this.$.getUserGroups);
+            },
 
-          /**
-           * Join users to a group
-           *
-           * @param {String} groupId
-           *
-           * @param {{ Object, userIds: string[] }} userIds
-           *
-           * @returns {Promise}
-           */
-          joinUserGroup: function(groupId, userIds) {
-              this.$.joinUserGroup.url = this._url('/user-groups/'+groupId+'/users' );
-              this.$.joinUserGroup.method = 'PUT';
-              this.$.joinUserGroup.contentType = "application/json";
-              this.$.joinUserGroup.body = userIds;
-              return this._generateRequest(this.$.joinUserGroup);
-          },
+            /**
+             * Join users to a group
+             *
+             * @param {String} groupId
+             *
+             * @param {{ Object, userIds: string[] }} userIds
+             *
+             * @returns {Promise}
+             */
+            joinUserGroup: function(groupId, userIds) {
+                this.$.joinUserGroup.url = this._url('/user-groups/'+groupId+'/users' );
+                this.$.joinUserGroup.method = 'PUT';
+                this.$.joinUserGroup.contentType = "application/json";
+                this.$.joinUserGroup.body = userIds;
+                return this._generateRequest(this.$.joinUserGroup);
+            },
 
-          /**
-           * Remove users from a group
-           *
-           * @param {String} groupId
-           * @param {{ Object, userIds: string[] }} userIds
-           *
-           * @returns {Promise}
-           */
-          leaveUserGroup: function(groupId, userIds) {
-              this.$.leaveUserGroup.url = this._url('/user-groups/'+groupId+'/users' );
-              this.$.leaveUserGroup.method = 'DELETE';
-              this.$.leaveUserGroup.contentType = "application/json";
-              this.$.leaveUserGroup.body = userIds;
-              return this._generateRequest(this.$.leaveUserGroup);
-          },
+            /**
+             * Remove users from a group
+             *
+             * @param {String} groupId
+             * @param {{ Object, userIds: string[] }} userIds
+             *
+             * @returns {Promise}
+             */
+            leaveUserGroup: function(groupId, userIds) {
+                this.$.leaveUserGroup.url = this._url('/user-groups/'+groupId+'/users' );
+                this.$.leaveUserGroup.method = 'DELETE';
+                this.$.leaveUserGroup.contentType = "application/json";
+                this.$.leaveUserGroup.body = userIds;
+                return this._generateRequest(this.$.leaveUserGroup);
+            },
 
-          /**
-           * Delete a user group
-           *
-           * @param {String} groupId
-           * @returns {Promise}
-           */
-          deleteUserGroup: function(groupId) {
-              this.$.deleteUserGroup.url = this._url('/user-groups/'+groupId);
-              this.$.deleteUserGroup.method = "DELETE";
-              this.$.deleteUserGroup.contentType = "application/json";
-              return this._generateRequest(this.$.deleteUserGroup);
-          }
+            /**
+             * Delete a user group
+             *
+             * @param {String} groupId
+             * @returns {Promise}
+             */
+            deleteUserGroup: function(groupId) {
+                this.$.deleteUserGroup.url = this._url('/user-groups/'+groupId);
+                this.$.deleteUserGroup.method = "DELETE";
+                this.$.deleteUserGroup.contentType = "application/json";
+                return this._generateRequest(this.$.deleteUserGroup);
+            }
 
-      });
-  </script>
+        });
+    </script>
 </dom-module>
