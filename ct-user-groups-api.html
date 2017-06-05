@@ -75,7 +75,7 @@ Element containing user groups API calls
                 this.$.joinUserGroup.url = this._url('/user-groups/'+groupId+'/users' );
                 this.$.joinUserGroup.method = 'PUT';
                 this.$.joinUserGroup.contentType = "application/json";
-                this.$.joinUserGroup.body = userIds;
+                this.$.joinUserGroup.body = { userIds: userIds };
                 return this._generateRequest(this.$.joinUserGroup);
             },
 
@@ -91,7 +91,7 @@ Element containing user groups API calls
                 this.$.leaveUserGroup.url = this._url('/user-groups/'+groupId+'/users' );
                 this.$.leaveUserGroup.method = 'DELETE';
                 this.$.leaveUserGroup.contentType = "application/json";
-                this.$.leaveUserGroup.body = userIds;
+                this.$.leaveUserGroup.body = { userIds: userIds };
                 return this._generateRequest(this.$.leaveUserGroup);
             },
 
